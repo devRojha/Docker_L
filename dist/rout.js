@@ -30,4 +30,21 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).json({ error: 'Error finding user' });
     }
 }));
+router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, name, password } = req.body;
+    try {
+        const user = yield prisma_1.default.user.create({
+            data: {
+                email,
+                name,
+                password
+            },
+        });
+        res.status(201).json({ message: 'User created successfully', user });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error in creating user' });
+    }
+}));
 exports.default = router;
